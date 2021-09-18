@@ -18,7 +18,7 @@ function rrule(::typeof(kron), x::AbstractMatrix, y::AbstractMatrix)
         z̄_tmp = reshape(z̄, ydim1, xdim1, ydim2, xdim2)
         x̄ = ein"abcd,ac->bd"(z̄_tmp, y)
         ȳ = ein"abcd,bd->ac"(z̄_tmp, x)
-        NO_FIELDS, x̄, ȳ
+        NoTangent(), x̄, ȳ
     end
 
     z, kron_pushback
@@ -31,7 +31,7 @@ function rrule(::typeof(init_u1m_by_params), d_vec::Array{<:Integer, 1}, qn::Int
     fwd = init_u1m_by_params(d_vec, qn, params)
 
     function param_init_pushback(f̄wd::u1_matrix)
-        NO_FIELDS, DoesNotExist(), DoesNotExist(), vec(f̄wd)
+        NoTangent(), DoesNotExist(), DoesNotExist(), vec(f̄wd)
     end
 
     fwd, param_init_pushback
@@ -45,7 +45,7 @@ function rrule(::typeof(init_diag_u1m), d_vec::Array{<:Integer, 1}, params::Arra
         for s̄ubm in f̄wd.submat_arr
             p̄arams = vcat(p̄arams, diag(s̄ubm))
         end
-        NO_FIELDS, DoesNotExist(), p̄arams
+        NoTangent(), DoesNotExist(), p̄arams
     end
 
     fwd, diag_init_pushback
@@ -59,7 +59,7 @@ end
 function rrule(::typeof(+), m1::u1_matrix, m2::u1_matrix)
     fwd = m1 + m2
     function plus_pushback(f̄wd::u1_matrix)
-        NO_FIELDS, f̄wd, f̄wd
+        NoTangent(), f̄wd, f̄wd
     end
 
     fwd, plus_pushback
@@ -68,7 +68,7 @@ end
 function rrule(::typeof(-), m1::u1_matrix, m2::u1_matrix)
     fwd = m1 - m2
     function minus_pushback(f̄wd::u1_matrix)
-        NO_FIELDS, f̄wd, f̄wd * -1.0
+        NoTangent(), f̄wd, f̄wd * -1.0
     end
 
     fwd, minus_pushback
@@ -79,7 +79,7 @@ function rrule(::typeof(*), m::u1_matrix, x::Real)
     function times_pushback(f̄wd::u1_matrix)
         m̄ = f̄wd * x
         x̄ = sum(vec(f̄wd) .* vec(m))
-        NO_FIELDS, m̄, x̄
+        NoTangent(), m̄, x̄
     end
 
     fwd, times_pushback
@@ -90,7 +90,7 @@ function rrule(::typeof(*), x::Real, m::u1_matrix)
     function times_pushback(f̄wd::u1_matrix)
         m̄ = f̄wd * x
         x̄ = sum(vec(f̄wd) .* vec(m))
-        NO_FIELDS, x̄, m̄
+        NoTangent(), x̄, m̄
     end
     fwd, times_pushback
 end
@@ -136,7 +136,7 @@ function rrule(::typeof(⊗), m1::u1_matrix, m2::u1_matrix)
             add_to_submat!(m̄2, s̄ubm2, l2)
         end
 
-        NO_FIELDS, m̄1, m̄2
+        NoTangent(), m̄1, m̄2
     end
 
     fwd, kron_pushback
@@ -177,7 +177,7 @@ function rrule(::typeof(*), m1::u1_matrix{Ti, Tf}, m2::u1_matrix{Ti, Tf}) where 
             add_to_submat!(m̄1, extern(s̄ubm1), l)
             add_to_submat!(m̄2, extern(s̄ubm2), l+m1.qn)
         end
-        NO_FIELDS, m̄1, m̄2
+        NoTangent(), m̄1, m̄2
     end
     fwd, multiply_pushback
 end
@@ -186,7 +186,7 @@ function rrule(::typeof(reflect), m::u1_matrix)
     fwd = reflect(m)
 
     function reflect_pushback(f̄wd::u1_matrix)
-        NO_FIELDS, reflect(f̄wd)
+        NoTangent(), reflect(f̄wd)
     end
 
     fwd, reflect_pushback
@@ -196,7 +196,7 @@ function rrule(::typeof(transpose), m::u1_matrix)
     fwd = transpose(m)
 
     function transpose_pushback(f̄wd::u1_matrix)
-        NO_FIELDS, transpose(f̄wd)
+        NoTangent(), transpose(f̄wd)
     end
 
     fwd, transpose_pushback
@@ -205,7 +205,7 @@ end
 function rrule(::typeof(adjoint), m::u1_matrix)
     fwd = m
     function adjoint_pushback(f̄wd::u1_matrix)
-        NO_FIELDS, f̄wd
+        NoTangent(), f̄wd
     end
     fwd, adjoint_pushback
 end
@@ -213,7 +213,7 @@ end
 function rrule(::typeof(symmetrize), m::u1_matrix)
     fwd = symmetrize(m)
     function symmetrize_pushback(f̄wd::u1_matrix)
-        NO_FIELDS, symmetrize(f̄wd)
+        NoTangent(), symmetrize(f̄wd)
     end
     fwd, symmetrize_pushback
 
@@ -232,7 +232,7 @@ function rrule(::typeof(log_tr_expm), m::u1_matrix{Ti, Tf}, beta::AbstractFloat)
         w̄ = transpose(scaled_rho) * beta * f̄wd
         _, w̄ = symm_pushback(w̄)
         b̄eta = tr(scaled_rho * symm) * f̄wd
-        NO_FIELDS, w̄, b̄eta
+        NoTangent(), w̄, b̄eta
     end
 
     fwd, log_tr_expm_pushback
