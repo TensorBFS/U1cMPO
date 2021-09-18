@@ -109,13 +109,13 @@ _, _, cmps_to_params = cmps_funcs_gen(d_vec)
 optimized_params = cmps_to_params(optimized_psi)
 
 optimized_Lpsi = psi_to_Lpsi(optimized_psi)
-klein_value = klein(optimized_Lpsi, optimized_psi, beta)
+#klein_value = klein(optimized_Lpsi, optimized_psi, beta)
 von_neumann_entropy_value = von_neumann_entropy(optimized_psi, beta, beta/2)
 
 println("--------------------------------------------------------")
 println("d_vec", d_vec)
 println("optimized_f ", optimized_f)
-println("klein_value ", klein_value)
+#println("klein_value ", klein_value)
 println("von_neumann_entropy_value ", von_neumann_entropy_value)
 println("--------------------------------------------------------")
 
@@ -127,6 +127,6 @@ save(dataname,
     "beta", beta,
     "K", K,
     "double_lmax", double_lmax,
-    "klein_value", klein_value,
+#    "klein_value", klein_value,
     "von_neumann_entropy_value", von_neumann_entropy_value
 )
