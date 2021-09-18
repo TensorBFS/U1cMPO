@@ -31,7 +31,7 @@ function rrule(::typeof(init_u1m_by_params), d_vec::Array{<:Integer, 1}, qn::Int
     fwd = init_u1m_by_params(d_vec, qn, params)
 
     function param_init_pushback(f̄wd::u1_matrix)
-        NoTangent(), DoesNotExist(), DoesNotExist(), vec(f̄wd)
+        NoTangent(), NoTangent(), NoTangent(), vec(f̄wd)
     end
 
     fwd, param_init_pushback
@@ -45,7 +45,7 @@ function rrule(::typeof(init_diag_u1m), d_vec::Array{<:Integer, 1}, params::Arra
         for s̄ubm in f̄wd.submat_arr
             p̄arams = vcat(p̄arams, diag(s̄ubm))
         end
-        NoTangent(), DoesNotExist(), p̄arams
+        NoTangent(), NoTangent(), p̄arams
     end
 
     fwd, diag_init_pushback
