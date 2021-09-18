@@ -15,8 +15,8 @@ s = ArgParseSettings()
         help = "beta"
         arg_type = Float64
         default = 32.0
-    "--g"
-        help = "g"
+    "--K"
+        help = "K"
         arg_type = Float64
         default = 1.0
     "--doublelmax"
@@ -35,22 +35,22 @@ end
 parsed_args = parse_args(s)
 
 beta = parsed_args["beta"]
-g = parsed_args["g"]
+K = parsed_args["K"]
 double_lmax = parsed_args["doublelmax"]
 chi = parsed_args["chi"]
 init = parsed_args["init"]
 # set the parameters manually for test
 #beta = 1.0
-#g = 1.2
+#K = 1.2
 #double_lmax = 3
 #chi = 8
 #init = "None"
 
 # generate the target data name
-dataname = @sprintf("rawdata_o3pi_g=%.1f_beta=%.2f_lmax=%.1f_chi=%d.jld", g, beta, double_lmax/2, chi)
+dataname = @sprintf("rawdata_o3pi_K=%.1f_beta=%.2f_lmax=%.1f_chi=%d.jld", K, beta, double_lmax/2, chi)
 
 # cmpo 
-T = cmpo_gen(g, double_lmax)
+T = cmpo_gen(K, double_lmax)
 
 # initialization
 psi = cmps(T.Q, T.L)
@@ -125,7 +125,7 @@ save(dataname,
     "optimized_f", optimized_f,
     "d_vec", d_vec,
     "beta", beta,
-    "g", g,
+    "K", K,
     "double_lmax", double_lmax,
     "klein_value", klein_value,
     "von_neumann_entropy_value", von_neumann_entropy_value

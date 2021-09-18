@@ -2,21 +2,21 @@ using U1cMPO
 using Printf
 
 """
-    cmpo_gen(g, double_lmax)
+    cmpo_gen(K, double_lmax)
 
 Generate cMPO for quantum rotor model described by O(3) nonlinear simga model with θ=π. 
-`g` means the coupling between neighboring rotors.
+`K` means the coupling between neighboring rotors.
 `double_lmax` means the twice of the cut of angular momentum.
 """ 
-function cmpo_gen(g::AbstractFloat, double_lmax::Integer)
+function cmpo_gen(K::AbstractFloat, double_lmax::Integer)
     Xm = X_theta_pi(-1, double_lmax)
     Xp = X_theta_pi(1, double_lmax)
     X0 = X_theta_pi(0, double_lmax)
     L2 = L2_theta_pi(double_lmax)
 
-    Q_T = L2 * (-1.0 / 2.0 / g)
-    L_T = [-sqrt(g) * Xm, -sqrt(g) * Xp, -sqrt(g) * X0]
-    R_T = [ sqrt(g) * Xp,  sqrt(g) * Xm,  sqrt(g) * X0]
+    Q_T = L2 * (-1.0 / 2.0 / K)
+    L_T = [-sqrt(K) * Xm, -sqrt(K) * Xp, -sqrt(K) * X0]
+    R_T = [ sqrt(K) * Xp,  sqrt(K) * Xm,  sqrt(K) * X0]
     cmpo(Q_T, L_T, R_T)
 end
 

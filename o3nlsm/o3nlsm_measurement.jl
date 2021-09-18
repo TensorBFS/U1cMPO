@@ -23,21 +23,21 @@ parsed_args = parse_args(s)
 dataname = parsed_args["dataname"]
 
 #beta = 20.0
-#g = 1.1
+#K = 1.1
 #double_lmax = 3
 #chi = 12
-#dataname = @sprintf("rawdata_o3pi_g=%.1f_beta=%.2f_lmax=%.1f_chi=%d.jld", g, beta, double_lmax/2, chi)
+#dataname = @sprintf("rawdata_o3pi_K=%.1f_beta=%.2f_lmax=%.1f_chi=%d.jld", K, beta, double_lmax/2, chi)
 
 # load previous parameters
 prev_result = load(dataname) # load jld from previous dataname
 beta = prev_result["beta"]
-g = prev_result["g"]
+K = prev_result["K"]
 double_lmax = prev_result["double_lmax"]
 d_vec = prev_result["d_vec"]
 chi = sum(d_vec)
 
 # cmpo 
-T = cmpo_gen(g, double_lmax)
+T = cmpo_gen(K, double_lmax)
 
 # load previous optimized cMPS params
 params = prev_result["optimized_params"]  
@@ -77,7 +77,7 @@ w_wang = sort(w_wang)
 measfile_name = @sprintf("measurements_o3pi_g=%.1f_beta=%.2f_lmax=%.1f_chi=%d.jld", g, beta, double_lmax/2, chi)
 save(measfile_name,
     "beta", beta,
-    "g", g,
+    "K", K,
     "double_lmax", double_lmax,
     "d_vec", d_vec,
     "energy_value", energy_value,
