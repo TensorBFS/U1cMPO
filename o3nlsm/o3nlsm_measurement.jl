@@ -74,7 +74,7 @@ w_gong = sort(w_gong)
 w_wang = sort(w_wang)
 
 # save
-measfile_name = @sprintf("measurements_o3pi_g=%.1f_beta=%.2f_lmax=%.1f_chi=%d.jld", g, beta, double_lmax/2, chi)
+measfile_name = @sprintf("measurements_o3pi_K=%.1f_beta=%.2f_lmax=%.1f_chi=%d.jld", K, beta, double_lmax/2, chi)
 save(measfile_name,
     "beta", beta,
     "K", K,
