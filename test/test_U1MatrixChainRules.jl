@@ -26,8 +26,8 @@ end
 
 #test kron rule
 @testset "kron" begin
-    test_rrule(kron, rand(2,3), rand(3,2))
-    test_rrule(kron, rand(4,5), rand(3,2))
+    test_rrule(kron, rand(2,3), rand(3,2), check_inferred=false)
+    test_rrule(kron, rand(4,5), rand(3,2), check_inferred=false)
 end
 
 #test u1_matrix ChainRules

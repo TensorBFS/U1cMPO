@@ -8,13 +8,13 @@ import ChainRulesCore: rrule, frule
 """
 rules missed in LinearAlgebra
 """
-function rrule(::typeof(kron), x::AbstractMatrix, y::AbstractMatrix)
+function rrule(::typeof(kron), x::Matrix{Tf}, y::Matrix{Tf}) where Tf <: Real
     z = kron(x, y)
 
     xdim1, xdim2 = size(x)
     ydim1, ydim2 = size(y)
 
-    function kron_pushback(z̄::AbstractMatrix)
+    function kron_pushback(z̄)
         z̄_tmp = reshape(z̄, ydim1, xdim1, ydim2, xdim2)
         x̄ = ein"abcd,ac->bd"(z̄_tmp, y)
         ȳ = ein"abcd,bd->ac"(z̄_tmp, x)
