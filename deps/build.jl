@@ -2,7 +2,7 @@
 import PyCall: pyimport
 
 # See https://stackoverflow.com/questions/12332975/installing-python-module-within-code.
-const PIP_PACKAGES = ["py3nj, numpy"]
+const PIP_PACKAGES = ["py3nj", "numpy"]
 
 sys = pyimport("sys")
 subprocess = pyimport("subprocess")
