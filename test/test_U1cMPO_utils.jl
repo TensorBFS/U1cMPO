@@ -49,8 +49,8 @@ function check_energy(params::Vector{<:AbstractFloat}, beta::AbstractFloat)
 
     # calculate energy density by calling function energy 
     energyDirect = energy(T, psi, beta)
-    println("direct ", energyDirect) 
-    println("numdiff ", energyNumDiff)
+    #println("direct ", energyDirect) 
+    #println("numdiff ", energyNumDiff)
     
     # compare
     isapprox(energyNumDiff, energyDirect, rtol=sqrt(dbeta))
