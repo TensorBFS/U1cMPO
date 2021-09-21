@@ -174,8 +174,8 @@ function rrule(::typeof(*), m1::u1_matrix{Ti, Tf}, m2::u1_matrix{Ti, Tf}) where 
         for (l, subm_multiply_pushback) in zip(valid_l_labels, subm_multiply_pushbacks)
             s̄ubm = submat(f̄wd, l)
             _, s̄ubm1, s̄ubm2 = subm_multiply_pushback(s̄ubm)
-            add_to_submat!(m̄1, extern(s̄ubm1), l)
-            add_to_submat!(m̄2, extern(s̄ubm2), l+m1.qn)
+            add_to_submat!(m̄1, unthunk(s̄ubm1), l)
+            add_to_submat!(m̄2, unthunk(s̄ubm2), l+m1.qn)
         end
         NoTangent(), m̄1, m̄2
     end
