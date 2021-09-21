@@ -27,20 +27,20 @@ end
 """
 rules for U1Matrix
 """
-function rrule(::typeof(init_u1m_by_params), d_vec::Array{<:Integer, 1}, qn::Integer, params::Array{<:AbstractFloat, 1})
+function rrule(::typeof(init_u1m_by_params), d_vec::Vector{<:Integer}, qn::Integer, params::Vector{<:AbstractFloat})
     fwd = init_u1m_by_params(d_vec, qn, params)
 
-    function param_init_pushback(f̄wd::u1_matrix)
+    function param_init_pushback(f̄wd)
         NoTangent(), NoTangent(), NoTangent(), vec(f̄wd)
     end
 
     fwd, param_init_pushback
 end
 
-function rrule(::typeof(init_diag_u1m), d_vec::Array{<:Integer, 1}, params::Array{<:AbstractFloat, 1})
+function rrule(::typeof(init_diag_u1m), d_vec::Array{Ti, 1}, params::Array{Tf, 1}) where {Ti<:Integer, Tf<:AbstractFloat}
     fwd = init_diag_u1m(d_vec, params)
 
-    function diag_init_pushback(f̄wd::u1_matrix{Ti, Tf}) where {Ti, Tf}
+    function diag_init_pushback(f̄wd)
         p̄arams = Array{Tf, 1}([])
         for s̄ubm in f̄wd.submat_arr
             p̄arams = vcat(p̄arams, diag(s̄ubm))
@@ -58,7 +58,7 @@ end
 
 function rrule(::typeof(+), m1::u1_matrix, m2::u1_matrix)
     fwd = m1 + m2
-    function plus_pushback(f̄wd::u1_matrix)
+    function plus_pushback(f̄wd)
         NoTangent(), f̄wd, f̄wd
     end
 
@@ -67,7 +67,7 @@ end
 
 function rrule(::typeof(-), m1::u1_matrix, m2::u1_matrix)
     fwd = m1 - m2
-    function minus_pushback(f̄wd::u1_matrix)
+    function minus_pushback(f̄wd)
         NoTangent(), f̄wd, f̄wd * -1.0
     end
 
@@ -76,7 +76,7 @@ end
 
 function rrule(::typeof(*), m::u1_matrix, x::Real)
     fwd = m * x
-    function times_pushback(f̄wd::u1_matrix)
+    function times_pushback(f̄wd)
         m̄ = f̄wd * x
         x̄ = sum(vec(f̄wd) .* vec(m))
         NoTangent(), m̄, x̄
@@ -87,7 +87,7 @@ end
 
 function rrule(::typeof(*), x::Real, m::u1_matrix)
     fwd = x * m
-    function times_pushback(f̄wd::u1_matrix)
+    function times_pushback(f̄wd)
         m̄ = f̄wd * x
         x̄ = sum(vec(f̄wd) .* vec(m))
         NoTangent(), x̄, m̄
@@ -95,7 +95,7 @@ function rrule(::typeof(*), x::Real, m::u1_matrix)
     fwd, times_pushback
 end
 
-function rrule(::typeof(⊗), m1::u1_matrix, m2::u1_matrix)
+function rrule(::typeof(⊗), m1::u1_matrix{Ti, Tf}, m2::u1_matrix{Ti, Tf}) where {Ti<:Integer, Tf<:AbstractFloat}
     d_vec, bookkeeping_func = kron_bookkeeping(m1.d_vec, m2.d_vec)
 
     qn = m1.qn + m2.qn
@@ -120,7 +120,7 @@ function rrule(::typeof(⊗), m1::u1_matrix, m2::u1_matrix)
         push!(subm_kron_pushback_train, subm_kron_pushback)
     end
 
-    function kron_pushback(f̄wd::u1_matrix{Ti, Tf}) where {Ti, Tf}
+    function kron_pushback(f̄wd) 
         _, bookkeeping_func = kron_bookkeeping(m1.d_vec, m2.d_vec)
         m̄1 = zero_u1m(Tf, m1.d_vec, m1.qn)
         m̄2 = zero_u1m(Tf, m2.d_vec, m2.qn)
@@ -168,7 +168,7 @@ function rrule(::typeof(*), m1::u1_matrix{Ti, Tf}, m2::u1_matrix{Ti, Tf}) where 
         end
     end
 
-    function multiply_pushback(f̄wd::u1_matrix{Ti, Tf}) where {Ti, Tf}
+    function multiply_pushback(f̄wd)
         m̄1 = zero_u1m(Tf, m1.d_vec, m1.qn)
         m̄2 = zero_u1m(Tf, m2.d_vec, m2.qn)
         for (l, subm_multiply_pushback) in zip(valid_l_labels, subm_multiply_pushbacks)
@@ -185,7 +185,7 @@ end
 function rrule(::typeof(reflect), m::u1_matrix)
     fwd = reflect(m)
 
-    function reflect_pushback(f̄wd::u1_matrix)
+    function reflect_pushback(f̄wd)
         NoTangent(), reflect(f̄wd)
     end
 
@@ -195,7 +195,7 @@ end
 function rrule(::typeof(transpose), m::u1_matrix)
     fwd = transpose(m)
 
-    function transpose_pushback(f̄wd::u1_matrix)
+    function transpose_pushback(f̄wd)
         NoTangent(), transpose(f̄wd)
     end
 
@@ -204,7 +204,7 @@ end
 
 function rrule(::typeof(adjoint), m::u1_matrix)
     fwd = m
-    function adjoint_pushback(f̄wd::u1_matrix)
+    function adjoint_pushback(f̄wd)
         NoTangent(), f̄wd
     end
     fwd, adjoint_pushback
@@ -212,7 +212,7 @@ end
 
 function rrule(::typeof(symmetrize), m::u1_matrix)
     fwd = symmetrize(m)
-    function symmetrize_pushback(f̄wd::u1_matrix)
+    function symmetrize_pushback(f̄wd)
         NoTangent(), symmetrize(f̄wd)
     end
     fwd, symmetrize_pushback
@@ -228,7 +228,7 @@ function rrule(::typeof(log_tr_expm), m::u1_matrix{Ti, Tf}, beta::AbstractFloat)
     expw = init_diag_u1m(m.d_vec, exp.((beta .* w) .- fwd ))
     scaled_rho = v * expw * transpose(v)
 
-    function log_tr_expm_pushback(f̄wd::AbstractFloat)
+    function log_tr_expm_pushback(f̄wd)
         w̄ = transpose(scaled_rho) * beta * f̄wd
         _, w̄ = symm_pushback(w̄)
         b̄eta = tr(scaled_rho * symm) * f̄wd

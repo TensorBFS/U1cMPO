@@ -30,7 +30,7 @@ end
 
 An alternative initialization for u1_matrix from a vector of parameters.
 """
-function init_u1m_by_params(d_vec::Array{<:Integer, 1}, qn::Integer, params::Array{<:AbstractFloat, 1})
+function init_u1m_by_params(d_vec::Vector{<:Integer}, qn::Integer, params::Vector{<:AbstractFloat})
     nlen = length(d_vec)
 
     # left and right labels, used to determine block shape
