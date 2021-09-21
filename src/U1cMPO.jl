@@ -4,7 +4,7 @@ __precompile__(true)
 
 include("U1Matrix.jl")
 include("U1MatrixChainRules.jl")
-include("sto_julia_wrapper.jl")
+include("spherical_tensor_operator.jl")
 include("pauli_matrices.jl")
 include("U1cMPO_basic.jl")
 include("U1cMPO_utils.jl")

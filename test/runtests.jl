@@ -10,9 +10,9 @@ end
     include("test_U1MatrixChainRules.jl")
 end
 
-@testset "sto_julia_wrapper.jl" begin
-    include("test_sto_julia_wrapper.jl")
-end
+#@testset "sto_julia_wrapper.jl" begin
+#    include("test_sto_julia_wrapper.jl")
+#end
 
 @testset "pauli_matrices.jl" begin
     include("test_pauli_matrices.jl")
