@@ -35,13 +35,13 @@ end
     d_vec = [1, 3, 3, 1]
     qn = 1
     params = rand(15)
-    test_rrule(init_u1m_by_params, d_vec ⊢ nothing, qn ⊢ nothing, params)
+    test_rrule(init_u1m_by_params, d_vec, qn, params)
 end
 
 @testset "diag" begin
     d_vec = [1, 3, 3, 1]
     params = rand(8)
-    test_rrule(init_diag_u1m, d_vec ⊢ nothing, params)
+    test_rrule(init_diag_u1m, d_vec, params, check_thunked_output_tangent=false)
 end
 
 @testset "plus" begin
@@ -74,47 +74,47 @@ end
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 1, rand(15))
     m2 = init_u1m_by_params(d_vec, 1, rand(15))
-    test_rrule(⊗, m1, m2)
+    test_rrule(⊗, m1, m2, check_thunked_output_tangent=false)
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 1, rand(15))
     m2 = init_u1m_by_params(d_vec, -1, rand(15))
-    test_rrule(⊗, m1, m2)
+    test_rrule(⊗, m1, m2, check_thunked_output_tangent=false)
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 2, rand(6))
     m2 = init_u1m_by_params(d_vec, -1, rand(15))
-    test_rrule(⊗, m1, m2)
+    test_rrule(⊗, m1, m2, check_thunked_output_tangent=false)
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 0, rand(20))
     m2 = init_u1m_by_params(d_vec, -1, rand(15))
-    test_rrule(kron, m1, m2)
+    test_rrule(kron, m1, m2, check_thunked_output_tangent=false)
 end
 
 @testset "multiply" begin
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 1, rand(15))
     m2 = init_u1m_by_params(d_vec, 1, rand(15))
-    test_rrule(*, m1, m2)
+    test_rrule(*, m1, m2, check_thunked_output_tangent=false)
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 1, rand(15))
     m2 = init_u1m_by_params(d_vec, -1, rand(15))
-    test_rrule(*, m1, m2)
+    test_rrule(*, m1, m2, check_thunked_output_tangent=false)
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 2, rand(6))
     m2 = init_u1m_by_params(d_vec, -1, rand(15))
-    test_rrule(*, m1, m2)
+    test_rrule(*, m1, m2, check_thunked_output_tangent=false)
     d_vec = [1, 3, 3, 1]
     m1 = init_u1m_by_params(d_vec, 0, rand(20))
     m2 = init_u1m_by_params(d_vec, -1, rand(15))
-    test_rrule(*, m1, m2)
+    test_rrule(*, m1, m2, check_thunked_output_tangent=false)
 end
 
 @testset "reflect" begin
     d_vec = [1, 3, 3, 1]
     m = init_u1m_by_params(d_vec, 0, rand(20))
-    test_rrule(reflect, m)
+    test_rrule(reflect, m, check_thunked_output_tangent=false)
     d_vec = [1, 2, 3, 1]
     m = init_u1m_by_params(d_vec, 1, rand(11))
-    test_rrule(reflect, m)
+    test_rrule(reflect, m, check_thunked_output_tangent=false)
 end
 
 @testset "transpose" begin
@@ -135,7 +135,7 @@ end
 @testset "symmetrize" begin
     d_vec = [1, 3, 3, 1]
     m = init_u1m_by_params(d_vec, 0, rand(20))
-    test_rrule(symmetrize, m)
+    test_rrule(symmetrize, m, check_thunked_output_tangent=false)
 end
 
 @testset "log_tr_expm" begin
