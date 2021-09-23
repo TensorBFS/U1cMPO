@@ -1,6 +1,6 @@
 # U1cMPO
 
-[![CI](https://github.com/TensorBFS/U1cMPO/actions/workflows/ci.yml/badge.svg)](https://github.com/TensorBFS/U1cMPO/actions/workflows/ci.yml)
+[![CI](https://github.com/TensorBFS/U1cMPO/actions/workflows/ci.yml/badge.svg)](https://github.com/TensorBFS/U1cMPO/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/TensorBFS/U1cMPO/branch/main/graph/badge.svg?token=TTbadaxozU)](https://codecov.io/gh/TensorBFS/U1cMPO)
 
 Performing a tensor network simulation of the nonlinear sigma model (NLSM) with $\theta=\pi$ topological term with Julia. 
 
