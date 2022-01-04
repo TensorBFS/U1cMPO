@@ -32,7 +32,7 @@ To simulate the NLSM with $\theta=\pi$ term with the cMPO method, we map it to a
 $$
 a \hat{H} = \sum_j \frac{(\hat{\boldsymbol{L}}'_j)^2}{2 K} + K \sum_{\langle i, j \rangle} \hat{\boldsymbol{n}}_i \cdot \hat{\boldsymbol{n}}_j \,.
 $$
-where $\hat{\boldsymbol{L}}'_j$ is the angular momentum operator decorated by a magnetic monopole, $\hat{\boldsymbol{n}}$ is the rotor operator, $a$ is the lattice spacing, and $K>0$ is a constant. In the low-energy and long-wavelength limit, the field theoretical description of this rotor model is the $O(3)$ NLSM with $\theta=\pi$ and $1/g^2=K$. The tensor network representation of this modified quantum rotor model is derived using the monopole harmonics basis. More details can be found in [this manuscript](https://arxiv.org/abs/21xx.xxxxx).
+where $\hat{\boldsymbol{L}}'_j$ is the angular momentum operator decorated by a magnetic monopole, $\hat{\boldsymbol{n}}$ is the rotor operator, $a$ is the lattice spacing, and $K>0$ is a constant. In the low-energy and long-wavelength limit, the field theoretical description of this rotor model is the $O(3)$ NLSM with $\theta=\pi$ and $1/g^2=K$. The tensor network representation of this modified quantum rotor model is derived using the monopole harmonics basis. More details can be found in [this manuscript](https://arxiv.org/abs/2109.11324).
 
 To run the simulation, enter the repository and type the following command
 
