@@ -6,7 +6,7 @@ Performing a tensor network simulation of the nonlinear sigma model (NLSM) with 
 
 This repository includes
 
-- a package that implements $U(1)$ symmetry in the [continuous matrix product operator (cMPO)](https://arxiv.org/abs/2004.12928) method
+- a package that implements $U(1)$ symmetry in the [continuous matrix product operator (cMPO)](https://arxiv.org/abs/2004.12928) method (see [repo for cMPO](https://github.com/TensorBFS/cMPO))
 - Simulation and measurements for the NLSM with $\theta=\pi$. 
 
 ## Installation
@@ -54,3 +54,20 @@ julia --project=. o3nlsm/o3nlsm_u1cmps.jl --beta 8 --K 2 --doublelmax 3 --chi 12
 
 Alternatively, the U1cMPO package can also be used to calculate the finite-temperature properties of other models with $U(1)$ symmetry.
 
+## To cite
+```latex
+@article{PhysRevD.104.114513,
+  title = {Tensor network simulation of the ($1+1$)-dimensional $O(3)$ nonlinear $\ensuremath{\sigma}$-model with $\ensuremath{\theta}=\ensuremath{\pi}$ term},
+  author = {Tang, Wei and Xie, X. C. and Wang, Lei and Tu, Hong-Hao},
+  journal = {Phys. Rev. D},
+  volume = {104},
+  issue = {11},
+  pages = {114513},
+  numpages = {13},
+  year = {2021},
+  month = {Dec},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevD.104.114513},
+  url = {https://link.aps.org/doi/10.1103/PhysRevD.104.114513}
+}
+```
